@@ -2,4 +2,4 @@
 
 ## Under :construction:
 
-Soon infrmation will be available.
+Soon infrmation will be available here.
