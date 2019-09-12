@@ -1,0 +1,37 @@
+{
+	"name": "webapp",
+	"version": "0.0.0",
+	"description": "Webapp for managing ER patients",
+	"engines": {
+		"node": "10.15.0",
+		"npm": "6.11.3"
+	},
+	"main": "server.js",
+	"scripts": {
+		"start": "npm server",
+		"server": "nodemon server",
+		"test": "npm test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ProjSante/webapp.git"
+	},
+	"author": "https://github.com/ProjSante",
+	"license": "AGPL-3.0",
+	"bugs": {
+		"url": "https://github.com/ProjSante/webapp/issues"
+	},
+	"homepage": "https://github.com/ProjSante/webapp#readme",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"config": "^3.2.2",
+		"express": "^4.17.1",
+		"express-validator": "^6.2.0",
+		"mongoose": "^5.7.0"
+	},
+	"devDependencies": {
+		"concurrently": "^4.1.2",
+		"eslint": "^6.3.0",
+		"nodemon": "^1.19.2"
+	}
+}
