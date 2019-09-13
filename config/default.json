@@ -1,0 +1,4 @@
+{
+	"mongoURI":
+		"mongodb+srv://ps-admin:iG6lcvC6q3gEOJeO@webapp-vx27f.mongodb.net/test?retryWrites=true&w=majority"
+}
