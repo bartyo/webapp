@@ -6,13 +6,17 @@ const keys = require('./config/keys');
 mongoose
 	.connect(keys.mongoURI, {
 		useNewUrlParser: true,
-		useUnifiedTopology: true
+		useUnifiedTopology: true,
+		useCreateIndex: true
 	})
 	.then(console.log('Mongo connected'))
 	.catch(err => console.error(err));
 
 // Services
 const app = express();
+
+// Middlewares
+app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => res.send('API running good...'));
