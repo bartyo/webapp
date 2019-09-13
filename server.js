@@ -1,4 +1,15 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+
+// DB connection
+mongoose
+	.connect(keys.mongoURI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	})
+	.then(console.log('Mongo connected'))
+	.catch(err => console.error(err));
 
 // Services
 const app = express();
