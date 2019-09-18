@@ -10,7 +10,7 @@ const User = require('../../models/User');
 
 // @route 	GET api/auth
 // @desc		Validate token to authenticate access
-// @access	Public
+// @access	Private
 
 router.get('/', auth, async (req, res) => {
 	try {
@@ -24,7 +24,7 @@ router.get('/', auth, async (req, res) => {
 
 // @route 	POST api/auth
 // @desc		Authenticate user and get token
-// @access	Public
+// @access	Private
 
 router.post(
 	'/',
