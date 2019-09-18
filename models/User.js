@@ -34,7 +34,6 @@ const userSchema = new Schema({
 	},
 	devices: [
 		{
-			_id: mongoose.Types.ObjectId,
 			patient: {
 				firstname: { type: String },
 				lastname: { type: String },
