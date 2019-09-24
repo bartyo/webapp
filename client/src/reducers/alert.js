@@ -15,8 +15,12 @@
 // 	}
 // }
 
+import { REMOVE_ALERT } from '../actions/types';
+
 export default function(state = [], action) {
 	switch (action.type) {
+		case REMOVE_ALERT:
+			return state.filter((alert) => alert.id !== action.payload);
 		default:
 			return state;
 	}
