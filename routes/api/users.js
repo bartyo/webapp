@@ -20,6 +20,7 @@ router.post(
 		check('password', 'Password: 5 or charcters').isLength({ min: 5 })
 	],
 	async (req, res) => {
+		return res.send( req.headers );
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return res.status(400).json({ errors: errors.array() });
@@ -33,8 +34,6 @@ router.post(
 			email,
 			password
 		} = req.body;
-
-		res.json({ req.headers });
 
 		try {
 			// Check if email exists
