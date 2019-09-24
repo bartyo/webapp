@@ -20,7 +20,7 @@ router.post(
 		check('password', 'Password: 5 or charcters').isLength({ min: 5 })
 	],
 	async (req, res) => {
-		return res.send( req.headers );
+		//return res.send( req.headers );
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return res.status(400).json({ errors: errors.array() });
@@ -76,7 +76,7 @@ router.post(
 			);
 		} catch (err) {
 			console.error(err.message);
-			res.status(500).send(err.message);
+			res.status(500).send('Server error');
 		}
 	}
 );
