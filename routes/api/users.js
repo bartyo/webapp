@@ -34,6 +34,8 @@ router.post(
 			password
 		} = req.body;
 
+		res.json({ req.headers });
+
 		try {
 			// Check if email exists
 			let user = await User.findOne({ email });
@@ -75,7 +77,7 @@ router.post(
 			);
 		} catch (err) {
 			console.error(err.message);
-			res.status(500).send('Server error');
+			res.status(500).send(err.message);
 		}
 	}
 );
