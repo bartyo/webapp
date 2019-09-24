@@ -13,9 +13,7 @@ const User = require('../../models/User');
 router.post(
 	'/',
 	[
-		check('firstname', 'Name is required')
-			.not()
-			.isEmpty(),
+		check('firstname', 'Name is required').not().isEmpty(),
 		check('email', 'Please include valid e-mail').isEmail(),
 		check('password', 'Password: 5 or charcters').isLength({ min: 5 })
 	],
@@ -40,7 +38,7 @@ router.post(
 			if (user) {
 				return res
 					.status(400)
-					.json({ errors: [{ msg: 'User already exists' }] });
+					.json({ errors: [ { msg: 'User already exists' } ] });
 			}
 
 			// Start creation of new user
