@@ -14,8 +14,11 @@ router.post(
 	'/',
 	[
 		check('firstname', 'Name is required').not().isEmpty(),
+		check('lastname', 'Surname is required').not().isEmpty(),
+		check('institution', 'Institution is required').not().isEmpty(),
+		check('jobtitle', 'Job title is required').not().isEmpty(),
 		check('email', 'Please include valid e-mail').isEmail(),
-		check('password', 'Password: 5 or charcters').isLength({ min: 5 })
+		check('password', 'Password: 5+ charcters').isLength({ min: 5 })
 	],
 	async (req, res) => {
 		const errors = validationResult(req);
