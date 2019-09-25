@@ -1,3 +1,11 @@
+:root {
+	--primary-color: #17a2b8;
+	--dark-color: #343a40;
+	--light-color: #f4f4f4;
+	--danger-color: #dc3545;
+	--success-color: #28a745;
+}
+
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 
 /**
@@ -930,6 +938,37 @@ form {
 }
 .u-pull-left {
 	float: left;
+}
+
+/* Alert
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.alert {
+	padding: 0.8rem 3rem;
+	margin: 1rem 0rem;
+	opacity: 0.9;
+	color: #fff;
+	border-radius: 2px;
+}
+.alert-primary {
+	background: var(--primary-color);
+}
+.alert-light {
+	background: var(--light-color);
+	color: #333;
+}
+.alert-dark {
+	background: var(--dark-color);
+}
+.alert-danger {
+	background: var(--danger-color);
+}
+.alert-success {
+	background: var(--success-color);
+}
+.alert-white {
+	background: #fff;
+	color: #333;
+	border: #ccc solid 1px;
 }
 
 /* Misc
