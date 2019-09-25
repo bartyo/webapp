@@ -13,9 +13,8 @@ import store from './store';
 
 import './App.css';
 
-//TODO: It is necessary?
-// Load User on App launch
-if (localStorage.token) setAuthToken(localStorage.token);
+// Load User from localStorage
+setAuthToken(localStorage.token);
 
 const App = () => {
 	useEffect(() => {
