@@ -18,7 +18,7 @@ router.get('/', auth, async (req, res) => {
 		res.status(200).json(user);
 	} catch (err) {
 		console.error(err.message);
-		res.status(401).json({ errors: [{ msg: 'Invalid user' }] });
+		res.status(401).json({ errors: [ { msg: 'Invalid user' } ] });
 	}
 });
 
@@ -28,7 +28,6 @@ router.get('/', auth, async (req, res) => {
 
 router.post(
 	'/',
-	auth,
 	[
 		check('email', 'Please include valid e-mail').isEmail(),
 		check('password', 'Password required').exists()
@@ -53,7 +52,7 @@ router.post(
 			if (!user || !pwdMatch) {
 				return res
 					.status(400)
-					.json({ errors: [{ msg: 'Invalid credentials' }] });
+					.json({ errors: [ { msg: 'Invalid credentials' } ] });
 			}
 
 			jwt.sign(

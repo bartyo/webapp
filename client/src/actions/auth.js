@@ -53,7 +53,6 @@ export const register = ({
 
 	try {
 		const res = await axios.post('/api/users', body, config);
-
 		dispatch({
 			type    : REGISTER_SUCCESS,
 			payload : res.data
@@ -76,7 +75,7 @@ export const register = ({
 };
 
 // Login User
-export const login = (email, password) => async (dispatch) => {
+export const loginAuth = ({ email, password }) => async (dispatch) => {
 	const config = {
 		headers : {
 			'Content-Type' : 'application/json'
@@ -90,7 +89,6 @@ export const login = (email, password) => async (dispatch) => {
 
 	try {
 		const res = await axios.post('/api/auth', body, config);
-
 		dispatch({
 			type    : LOGIN_SUCCESS,
 			payload : res.data
