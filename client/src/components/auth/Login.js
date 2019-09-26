@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loginAuth } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-const Login = () => {
+const Login = ({ loginAuth, isAuthenticated }) => {
 	const [ formData, setFormData ] = useState({
 		email    : '',
 		password : ''
@@ -14,9 +17,10 @@ const Login = () => {
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
-
-		console.log('SUCCESS');
+		loginAuth({ email, password });
 	};
+
+	if (isAuthenticated) return <Redirect to='/dashboard' />;
 
 	return (
 		<Fragment>
@@ -63,4 +67,13 @@ const Login = () => {
 	);
 };
 
-export default Login;
+Login.propTypes = {
+	isAuthenticated : PropTypes.bool,
+	loginAuth       : PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+	isAuthenticated : state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { loginAuth })(Login);

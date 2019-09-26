@@ -1,10 +1,11 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
 
-const Register = ({ setAlert }) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
 	const [ formData, setFormData ] = useState({
 		firstname   : '',
 		lastname    : '',
@@ -33,10 +34,20 @@ const Register = ({ setAlert }) => {
 		if (password !== password2) {
 			setAlert('Passwords do not match', 'danger', 3000);
 		} else {
-			console.log('SUCCESS');
+			register({
+				firstname,
+				lastname,
+				institution,
+				jobtitle,
+				email,
+				password
+			});
 		}
 	};
 
+	if (isAuthenticated) return <Redirect to='/dashboard' />;
+
+	//TODO: Add validation on the client side 'required'
 	return (
 		<Fragment>
 			<h1>Sign Up</h1>
@@ -55,7 +66,6 @@ const Register = ({ setAlert }) => {
 							name='firstname'
 							value={firstname}
 							onChange={(e) => onChange(e)}
-							required
 						/>
 					</div>
 
@@ -110,7 +120,6 @@ const Register = ({ setAlert }) => {
 					name='email'
 					value={email}
 					onChange={(e) => onChange(e)}
-					required
 				/>
 
 				<div className='row'>
@@ -124,7 +133,6 @@ const Register = ({ setAlert }) => {
 							name='password'
 							value={password}
 							onChange={(e) => onChange(e)}
-							required
 						/>
 					</div>
 
@@ -138,7 +146,6 @@ const Register = ({ setAlert }) => {
 							name='password2'
 							value={password2}
 							onChange={(e) => onChange(e)}
-							required
 						/>
 					</div>
 				</div>
@@ -157,7 +164,13 @@ const Register = ({ setAlert }) => {
 };
 
 Register.propTypes = {
-	setAlert : PropTypes.func.isRequired
+	setAlert        : PropTypes.func.isRequired,
+	isAuthenticated : PropTypes.bool,
+	register        : PropTypes.func.isRequired
 };
 
-export default connect(null, { setAlert })(Register);
+const mapStateToProps = (state) => ({
+	isAuthenticated : state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);
