@@ -4,9 +4,7 @@ import { ADMIT_PATIENT } from '../actions/types';
 import setAuthToken from '../utils/setAuthToken';
 
 // Admit patient
-export const admitPatient = ({ firstname, lastname, observation }) => async (
-	dispatch
-) => {
+export const admitPatient = (formData, history) => async (dispatch) => {
 	setAuthToken(localStorage.token);
 
 	const config = {
@@ -15,14 +13,8 @@ export const admitPatient = ({ firstname, lastname, observation }) => async (
 		}
 	};
 
-	const body = JSON.stringify({
-		firstname,
-		lastname,
-		observation
-	});
-
 	try {
-		const res = await axios.post('/api/patients', body, config);
+		const res = await axios.post('/api/patients', formData, config);
 
 		dispatch({
 			type    : ADMIT_PATIENT,
@@ -30,13 +22,21 @@ export const admitPatient = ({ firstname, lastname, observation }) => async (
 		});
 
 		dispatch(setAlert('Patient Admitted', 'success'));
+
+		history.push('/dashboard');
 	} catch (err) {
 		//TODO: factor to ./src/helpers/errorAlerts as a
-		const errors = err.response.data.errors;
-
-		if (errors) {
-			errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-		}
+		// const errors = err.response ? err.response.data.errors : null;
+		// if (errors) {
+		// 	errors.forEach((error) => {
+		// 		dispatch(setAlert(error.msg, 'danger'));
+		// 	});
+		// }
 		//TODO:
+		//TODO: Add ADMIT_PATIENT_ERROR type and reducer
+		// dispatch({
+		// 	type    : ADMIT_PATIENT_ERROR,
+		// 	payload : { msg: err.response.statusText, status: err.response.status }
+		// });
 	}
 };

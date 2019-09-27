@@ -1,9 +1,10 @@
 import React, { useState, Fragment } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { admitPatient } from '../../actions/patient';
 import PropTypes from 'prop-types';
 
-const AddPatient = ({ admitPatient }) => {
+const AddPatient = ({ admitPatient, history }) => {
 	const [ formData, setFormData ] = useState({
 		firstname   : '',
 		lastname    : '',
@@ -18,7 +19,7 @@ const AddPatient = ({ admitPatient }) => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 
-		admitPatient({ firstname, lastname, observation });
+		admitPatient(formData, history);
 	};
 
 	return (
@@ -67,12 +68,7 @@ const AddPatient = ({ admitPatient }) => {
 };
 
 AddPatient.propTypes = {
-	isAuthenticated : PropTypes.bool,
-	admitPatient    : PropTypes.func.isRequired
+	admitPatient : PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-	isAuthenticated : state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, { admitPatient })(AddPatient);
+export default connect(null, { admitPatient })(withRouter(AddPatient));
