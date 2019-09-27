@@ -1,6 +1,6 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
-import { setAlert } from './alert';
+
 import {
 	REGISTER_SUCCESS,
 	REGISTER_FAIL,
@@ -62,11 +62,11 @@ export const register = ({
 		dispatch(loadUser());
 	} catch (err) {
 		//TODO: factor to ./src/helpers/errorAlerts as a
-		const errors = err.response.data.errors;
+		// const errors = err.response.data.errors;
 
-		if (errors) {
-			errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-		}
+		// if (errors) {
+		// 	errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+		// }
 		//TODO:
 
 		dispatch({
@@ -97,14 +97,6 @@ export const loginAuth = ({ email, password }) => async (dispatch) => {
 
 		dispatch(loadUser());
 	} catch (err) {
-		//TODO: factor to ./src/helpers/errorAlerts as a
-		const errors = err;
-
-		// if (errors) {
-		// 	errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-		// }
-		//TODO:
-
 		dispatch({
 			type : LOGIN_FAIL
 		});
