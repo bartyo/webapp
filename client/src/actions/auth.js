@@ -98,11 +98,11 @@ export const loginAuth = ({ email, password }) => async (dispatch) => {
 		dispatch(loadUser());
 	} catch (err) {
 		//TODO: factor to ./src/helpers/errorAlerts as a
-		const errors = err.response.data.errors;
+		const errors = err;
 
-		if (errors) {
-			errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-		}
+		// if (errors) {
+		// 	errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+		// }
 		//TODO:
 
 		dispatch({
