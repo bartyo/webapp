@@ -26,12 +26,12 @@ export const admitPatient = (formData, history) => async (dispatch) => {
 		history.push('/dashboard');
 	} catch (err) {
 		//TODO: factor to ./src/helpers/errorAlerts as a
-		// const errors = err.response ? err.response.data.errors : null;
-		// if (errors) {
-		// 	errors.forEach((error) => {
-		// 		dispatch(setAlert(error.msg, 'danger'));
-		// 	});
-		// }
+		const errors = err.response ? err.response.data.errors : null;
+		if (errors) {
+			errors.forEach((error) => {
+				dispatch(setAlert(error.msg, 'danger'));
+			});
+		}
 		//TODO:
 		//TODO: Add ADMIT_PATIENT_ERROR type and reducer
 		// dispatch({
