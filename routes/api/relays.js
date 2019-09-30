@@ -15,7 +15,7 @@ router.put('/', auth, async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id);
 
-		let resp = user.devices.find(device => {
+		let resp = user.devices.find((device) => {
 			if (device.id === id) {
 				return device.measures.unshift(measure);
 			}
@@ -24,30 +24,24 @@ router.put('/', auth, async (req, res) => {
 		await user.save();
 
 		res.status(200).json(resp);
-	} catch {
+	} catch (err) {
 		console.error(err.message);
-		res.status(500).json({ errors: [{ msg: 'Server error' }] });
+		res.status(500).json({ errors: [ { msg: 'Server error' } ] });
 	}
 });
 
 // @route 	GET api/relays
-// @desc		Get lattest measures from all relays
+// @desc		Vector with patient objects from all relays
 // @access	Private
 
 router.get('/', auth, async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id);
 
-		let update = [];
-
-		user.devices.map(device => {
-			if (device.measures.length) update.push(device.measures[0]);
-		});
-
-		res.json(update);
+		res.json(user.devices);
 	} catch (err) {
 		console.error(err.message);
-		res.status(500).json({ errors: [{ msg: 'Server error' }] });
+		res.status(500).json({ errors: [ { msg: 'Server error' } ] });
 	}
 });
 

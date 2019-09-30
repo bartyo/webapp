@@ -2,9 +2,8 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { admitPatient } from '../../actions/patient';
 
-const Dashboard = ({ admitPatient, auth: { loading, user } }) => {
+const Dashboard = ({ auth: { loading, user } }) => {
 	return loading || user === null ? (
 		<h1>Loading</h1>
 	) : (
@@ -24,16 +23,18 @@ const Dashboard = ({ admitPatient, auth: { loading, user } }) => {
 				<i className='fas fa-envelope'>{` Contact: ${user.email}`}</i>
 			</p>
 
+			<Link to='/follow'>
+				<input className='button-primary' type='button' value='Follow' />
+			</Link>
 			<Link to='/add-patient'>
-				<input class='button-primary' type='button' value='Patient Manager' />
+				<input className='button-primary' type='button' value='Add Patient' />
 			</Link>
 		</Fragment>
 	);
 };
 
 Dashboard.propTypes = {
-	admitPatient : PropTypes.func.isRequired,
-	auth         : PropTypes.object.isRequired
+	auth : PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -41,4 +42,4 @@ const mapStateToProps = (state) => ({
 	patient : state.patient
 });
 
-export default connect(mapStateToProps, { admitPatient })(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
