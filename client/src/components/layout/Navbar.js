@@ -8,15 +8,21 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 	const authLinks = (
 		<ul>
 			<li>
+				<Link to='/add-patient'>
+					<i className='fas fa-user-plus' />
+					<span className='hide show-m'> Add Patient</span>
+				</Link>
+			</li>
+			<li>
 				<Link to='/dashboard'>
 					<i className='fas fa-user' />
-					<span className='hide-sm'> Dashboard</span>
+					<span className='hide show-m'> Dashboard</span>
 				</Link>
 			</li>
 			<li>
 				<Link onClick={logout} to='#!'>
 					<i className='fas fa-sign-out-alt' />
-					<span className='hide-sm'> Logout</span>
+					<span className='hide show-m'> Logout</span>
 				</Link>
 			</li>
 		</ul>
@@ -25,19 +31,20 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 	const guestLinks = (
 		<ul>
 			<li>
-				<Link to='/register'>Register</Link>
+				<Link to='/login'>Login</Link>
 			</li>
 			<li>
-				<Link to='/login'>Login</Link>
+				<Link to='/register'>Register</Link>
 			</li>
 		</ul>
 	);
 
 	return (
-		<nav>
+		<nav className='navbar'>
 			<h1>
-				<Link to='/'>
-					<i className='fas' />ProjSante
+				<Link to={isAuthenticated ? '/follow' : '/'}>
+					<i className='far fa-hospital' />
+					<span className='hide show-m'> FollowER</span>
 				</Link>
 			</h1>
 			{!loading && (
