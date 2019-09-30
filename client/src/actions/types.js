@@ -6,3 +6,7 @@ export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
+export const ADMIT_PATIENT = 'ADMIT_PATIENT';
+export const FOLLOW_PATIENTS = 'FOLLOW_PATIENTS';
+export const DISCHARGE_PATIENT = 'DISCHARGE_PATIENT';

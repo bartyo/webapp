@@ -1,13 +1,15 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import { setAlert } from './alert';
+
 import {
 	REGISTER_SUCCESS,
 	REGISTER_FAIL,
 	USER_LOADED,
 	AUTH_ERROR,
 	LOGIN_SUCCESS,
-	LOGIN_FAIL
+	LOGIN_FAIL,
+	LOGOUT
 } from './types';
 
 // Laod User
@@ -20,6 +22,10 @@ export const loadUser = () => async (dispatch) => {
 			type    : USER_LOADED,
 			payload : res.data
 		});
+
+		dispatch(
+			setAlert(`Welcome ${res.data.firstname} ${res.data.lastname}`, 'success')
+		);
 	} catch (err) {
 		dispatch({
 			type : AUTH_ERROR
@@ -61,10 +67,11 @@ export const register = ({
 		dispatch(loadUser());
 	} catch (err) {
 		//TODO: factor to ./src/helpers/errorAlerts as a
-		const errors = err.response.data.errors;
-
+		const errors = err.response ? err.response.data.errors : null;
 		if (errors) {
-			errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+			errors.forEach((error) => {
+				dispatch(setAlert(error.msg, 'danger'));
+			});
 		}
 		//TODO:
 
@@ -96,16 +103,19 @@ export const loginAuth = ({ email, password }) => async (dispatch) => {
 
 		dispatch(loadUser());
 	} catch (err) {
-		//TODO: factor to ./src/helpers/errorAlerts as a
-		const errors = err.response.data.errors;
-
-		if (errors) {
-			errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-		}
-		//TODO:
-
 		dispatch({
 			type : LOGIN_FAIL
 		});
+		const errors = err.response ? err.response.data.errors : null;
+		if (errors) {
+			errors.forEach((error) => {
+				dispatch(setAlert(error.msg, 'danger'));
+			});
+		}
 	}
+};
+
+// Logout User
+export const logout = () => (dispatch) => {
+	dispatch({ type: LOGOUT });
 };

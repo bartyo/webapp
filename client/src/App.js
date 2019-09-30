@@ -4,6 +4,10 @@ import Navbar from './components/layout/Navbar';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Landing from './components/layout/Landing';
+import Dashboard from './components/dashboard/Dashboard';
+import Follow from './components/follow/Follow';
+import AddPatient from './components/follow/AddPatient';
+import PrivateRoute from './components/routing/PrivateRoute';
 import Alert from './components/layout/Alert';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './actions/auth';
@@ -32,6 +36,9 @@ const App = () => {
 						<Switch>
 							<Route exact path='/register' component={Register} />
 							<Route exact path='/login' component={Login} />
+							<PrivateRoute exact path='/dashboard' component={Dashboard} />
+							<PrivateRoute exact path='/add-patient' component={AddPatient} />
+							<PrivateRoute exact path='/follow' component={Follow} />
 						</Switch>
 					</section>
 				</Fragment>

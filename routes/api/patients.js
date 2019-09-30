@@ -13,12 +13,8 @@ router.post(
 	'/',
 	auth,
 	[
-		check('firstname', 'First name required')
-			.not()
-			.isEmpty(),
-		check('lastname', 'Last name required')
-			.not()
-			.isEmpty()
+		check('firstname', 'First name required').not().isEmpty(),
+		check('lastname', 'Last name required').not().isEmpty()
 	],
 	async (req, res) => {
 		const errors = validationResult(req);
@@ -36,14 +32,14 @@ router.post(
 
 			const user = await User.findById(req.user.id);
 
-			user.devices.push({ patient });
+			const count = user.devices.push({ patient });
 
 			await user.save();
 
-			res.status(200).json(user);
+			res.status(200).json(user.devices[count - 1]);
 		} catch (err) {
 			console.error(err.message);
-			res.status(500).json({ errors: [{ msg: 'Error connecting user' }] });
+			res.status(500).json({ errors: [ { msg: 'Error connecting user' } ] });
 		}
 	}
 );
