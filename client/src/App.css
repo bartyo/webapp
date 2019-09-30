@@ -100,6 +100,7 @@ template {
 
 a {
 	background-color: transparent;
+	text-decoration: none;
 }
 
 /**
@@ -844,7 +845,8 @@ label > .label-body {
 /* Lists
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 ul {
-	list-style: circle inside;
+	/* list-style: circle inside; */
+	list-style: none;
 }
 ol {
 	list-style: decimal inside;
@@ -971,6 +973,29 @@ form {
 	border: #ccc solid 1px;
 }
 
+/* Navbar
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.navbar {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.6rem 1rem;
+	width: inherit;
+	background: var(--light-color);
+	border-bottom: solid 0.1rem var(--primary-color);
+	margin-bottom: 2rem;
+}
+.navbar ul {
+	display: flex;
+	margin: 0;
+}
+.navbar a {
+	margin: 0 1rem;
+	padding: 0.6rem 1rem;
+}
+
 /* Misc
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 hr {
@@ -1000,6 +1025,9 @@ near the relevant code. For example, if you wanted to change the styles for butt
 on small devices, paste the mobile query code up in the buttons section and style it
 there.
 */
+.hide {
+	display: none;
+}
 
 /* Larger than mobile */
 @media (min-width: 400px) {
@@ -1011,10 +1039,16 @@ there.
 
 /* Larger than tablet */
 @media (min-width: 750px) {
+	.show-m {
+		display: contents;
+	}
 }
 
 /* Larger than desktop */
 @media (min-width: 1000px) {
+	.show-l {
+		display: contents;
+	}
 }
 
 /* Larger than Desktop HD */
