@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { ADMIT_PATIENT, FOLLOW_PATIENTS } from '../actions/types';
+import { FOLLOW_PATIENTS } from '../actions/types';
 import setAuthToken from '../utils/setAuthToken';
 
 // Admit patient
@@ -14,16 +14,11 @@ export const admitPatient = (formData, history) => async (dispatch) => {
 	};
 
 	try {
-		const res = await axios.post('/api/patients', formData, config);
-
-		dispatch({
-			type    : ADMIT_PATIENT,
-			payload : res.data
-		});
+		await axios.post('/api/patients', formData, config);
 
 		dispatch(setAlert('Patient Admitted', 'success'));
 
-		history.push('/dashboard');
+		history.push('/follow');
 	} catch (err) {
 		//TODO: factor to ./src/helpers/errorAlerts as a
 		const errors = err.response ? err.response.data.errors : null;
