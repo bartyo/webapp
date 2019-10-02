@@ -4,7 +4,9 @@ import { setAlert } from './alert';
 
 import {
 	REGISTER_SUCCESS,
+	UPDATE_SUCCESS,
 	REGISTER_FAIL,
+	UPDATE_FAIL,
 	USER_LOADED,
 	AUTH_ERROR,
 	LOGIN_SUCCESS,
@@ -13,7 +15,7 @@ import {
 } from './types';
 
 // Laod User
-export const loadUser = () => async (dispatch) => {
+export const loadUser = (edit = false) => async (dispatch) => {
 	setAuthToken(localStorage.token);
 
 	try {
@@ -23,9 +25,11 @@ export const loadUser = () => async (dispatch) => {
 			payload : res.data
 		});
 
-		dispatch(
-			setAlert(`Welcome ${res.data.firstname} ${res.data.lastname}`, 'success')
-		);
+		const greeting = edit
+			? `User Updated`
+			: `Welcome ${res.data.firstname} ${res.data.lastname}`;
+
+		dispatch(setAlert(greeting, 'success'));
 	} catch (err) {
 		dispatch({
 			type : AUTH_ERROR
@@ -77,6 +81,40 @@ export const register = ({
 
 		dispatch({
 			type : REGISTER_FAIL
+		});
+	}
+};
+
+// Update User
+export const updateUser = (formData, history) => async (dispatch) => {
+	const config = {
+		headers : {
+			'Content-Type' : 'application/json'
+		}
+	};
+
+	try {
+		const res = await axios.put('/api/users', formData, config);
+		dispatch({
+			type    : UPDATE_SUCCESS,
+			payload : res.data
+		});
+
+		dispatch(loadUser(true));
+
+		history.push('/dashboard');
+	} catch (err) {
+		//TODO: factor to ./src/helpers/errorAlerts as a
+		const errors = err.response ? err.response.data.errors : null;
+		if (errors) {
+			errors.forEach((error) => {
+				dispatch(setAlert(error.msg, 'danger'));
+			});
+		}
+		//TODO:
+
+		dispatch({
+			type : UPDATE_FAIL
 		});
 	}
 };

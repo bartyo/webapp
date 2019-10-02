@@ -24,10 +24,29 @@ const Dashboard = ({ auth: { loading, user } }) => {
 			</p>
 
 			<Link to='/follow'>
-				<input className='button-primary' type='button' value='Follow' />
+				<input className='button button-primary' type='button' value='Follow' />
 			</Link>
 			<Link to='/add-patient'>
-				<input className='button-primary' type='button' value='Add Patient' />
+				<input
+					className='button button-primary'
+					type='button'
+					value='Add Patient'
+				/>
+			</Link>
+
+			<Link to='/edit-user'>
+				<input
+					className='button button-warning'
+					type='button'
+					value='Edit User'
+				/>
+			</Link>
+			<Link to='/delete-user'>
+				<input
+					className='button button-danger'
+					type='button'
+					value='Delete User'
+				/>
 			</Link>
 		</Fragment>
 	);
