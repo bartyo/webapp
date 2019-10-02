@@ -6,13 +6,13 @@ const path = require('path');
 // DB connection
 mongoose
 	.connect(keys.mongoURI, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useCreateIndex: true,
-		useFindAndModify: false
+		useNewUrlParser    : true,
+		useUnifiedTopology : true,
+		useCreateIndex     : true,
+		useFindAndModify   : false
 	})
 	.then(console.log('Mongo connected'))
-	.catch(err => console.error(err));
+	.catch((err) => console.error(err));
 
 // Services
 const app = express();
