@@ -139,19 +139,6 @@ const EditUser = ({ user, updateUser, history }) => {
 							onChange={(e) => onChange(e)}
 						/>
 					</div>
-
-					{/* <div className='six columns'>
-						<label htmlFor='exPass2'>Re-type Password</label>
-						<input
-							className='u-full-width'
-							type='password'
-							placeholder='Re-type password'
-							id='exPass2'
-							name='password2'
-							value={password2}
-							onChange={(e) => onChange(e)}
-						/>
-					</div> */}
 				</div>
 
 				<Link to='/dashboard'>
