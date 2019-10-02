@@ -84,7 +84,7 @@ router.post(
 
 // @route 	PUT api/users
 // @desc		Update user
-// @access	Public
+// @access	Private
 
 router.put(
 	'/',
@@ -160,5 +160,21 @@ router.put(
 		}
 	}
 );
+
+// @route 	DELETE api/users
+// @desc		Delete user
+// @access	Private
+
+router.delete('/', auth, async (req, res) => {
+	try {
+		// Find and remove
+		await User.findByIdAndRemove(req.user.id);
+
+		return res.status(200).json({ msg: 'User Removed' });
+	} catch (err) {
+		console.error(err.message);
+		return res.status(500).send('Server error');
+	}
+});
 
 module.exports = router;

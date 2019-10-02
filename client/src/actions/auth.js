@@ -11,7 +11,9 @@ import {
 	AUTH_ERROR,
 	LOGIN_SUCCESS,
 	LOGIN_FAIL,
-	LOGOUT
+	LOGOUT,
+	DELETE_USER,
+	RESET_PATIENTS
 } from './types';
 
 // Laod User
@@ -156,4 +158,33 @@ export const loginAuth = ({ email, password }) => async (dispatch) => {
 // Logout User
 export const logout = () => (dispatch) => {
 	dispatch({ type: LOGOUT });
+};
+
+// Delete User
+export const deleteUser = (history) => async (dispatch) => {
+	if (window.confirm('Are you sure? This can NOT be undone!')) {
+		try {
+			const res = await axios.delete('/api/users');
+
+			dispatch({
+				type    : DELETE_USER,
+				payload : res.data
+			});
+
+			dispatch({
+				type : RESET_PATIENTS
+			});
+
+			dispatch(setAlert('Your account has been permanently deleted'));
+
+			history.push('/');
+		} catch (err) {
+			const errors = err.response ? err.response.data.errors : null;
+			if (errors) {
+				errors.forEach((error) => {
+					dispatch(setAlert(error.msg, 'danger'));
+				});
+			}
+		}
+	}
 };
