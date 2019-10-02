@@ -5,6 +5,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Landing from './components/layout/Landing';
 import Dashboard from './components/dashboard/Dashboard';
+import EditUser from './components/dashboard/EditUser';
 import Follow from './components/follow/Follow';
 import AddPatient from './components/follow/AddPatient';
 import PrivateRoute from './components/routing/PrivateRoute';
@@ -37,6 +38,7 @@ const App = () => {
 							<Route exact path='/register' component={Register} />
 							<Route exact path='/login' component={Login} />
 							<PrivateRoute exact path='/dashboard' component={Dashboard} />
+							<PrivateRoute exact path='/edit-user' component={EditUser} />
 							<PrivateRoute exact path='/add-patient' component={AddPatient} />
 							<PrivateRoute exact path='/follow' component={Follow} />
 						</Switch>

@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteUser } from '../../actions/auth';
 
-const Dashboard = ({ auth: { loading, user } }) => {
+const Dashboard = ({ auth: { loading, user }, deleteUser, history }) => {
 	return loading || user === null ? (
 		<h1>Loading</h1>
 	) : (
@@ -24,17 +25,38 @@ const Dashboard = ({ auth: { loading, user } }) => {
 			</p>
 
 			<Link to='/follow'>
-				<input className='button-primary' type='button' value='Follow' />
+				<input className='button button-primary' type='button' value='Follow' />
 			</Link>
 			<Link to='/add-patient'>
-				<input className='button-primary' type='button' value='Add Patient' />
+				<input
+					className='button button-primary'
+					type='button'
+					value='Add Patient'
+				/>
 			</Link>
+
+			<Link to='/edit-user'>
+				<input
+					className='button button-warning'
+					type='button'
+					value='Edit User'
+				/>
+			</Link>
+			<input
+				className='button button-danger'
+				type='button'
+				value='Delete User'
+				onClick={() => {
+					deleteUser(history);
+				}}
+			/>
 		</Fragment>
 	);
 };
 
 Dashboard.propTypes = {
-	auth : PropTypes.object.isRequired
+	auth       : PropTypes.object.isRequired,
+	deleteUser : PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -42,4 +64,4 @@ const mapStateToProps = (state) => ({
 	patient : state.patient
 });
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, { deleteUser })(withRouter(Dashboard));

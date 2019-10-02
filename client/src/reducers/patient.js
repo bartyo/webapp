@@ -1,4 +1,8 @@
-import { ADMIT_PATIENT, FOLLOW_PATIENTS } from '../actions/types';
+import {
+	ADMIT_PATIENT,
+	FOLLOW_PATIENTS,
+	RESET_PATIENTS
+} from '../actions/types';
 
 const initialState = {
 	patients : []
@@ -17,6 +21,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				patients : payload
+			};
+		case RESET_PATIENTS:
+			return {
+				...state,
+				patients : []
 			};
 		// DISCHARGE_PATIENT has _id in payload
 		// case DISCHARGE_PATIENT:
