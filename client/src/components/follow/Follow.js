@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 import { fetchPatients } from '../../actions/patient';
 import FollowRow from './FollowRow';
 
-const Follow = ({ patient: { patients }, fetchPatients }) => {
+const Follow = ({
+	patient       : { patients },
+	preferences   : { pulse, oxygensat },
+	fetchPatients
+}) => {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			fetchPatients();
@@ -20,17 +24,17 @@ const Follow = ({ patient: { patients }, fetchPatients }) => {
 		patients.forEach((patient) => {
 			if (patient.measures.length !== 0) {
 				if (
-					patient.measures[0].pulse > 180 ||
-					patient.measures[0].pulse < 60 ||
-					patient.measures[0].oxygensat > 2 ||
-					patient.measures[0].oxygensat < 0.5
+					patient.measures[0].pulse > pulse.danger.maxLevel ||
+					patient.measures[0].pulse < pulse.danger.minLevel ||
+					patient.measures[0].oxygensat > oxygensat.danger.maxLevel ||
+					patient.measures[0].oxygensat < oxygensat.danger.minLevel
 				) {
 					followDanger.push(patient);
 				} else if (
-					patient.measures[0].pulse > 160 ||
-					patient.measures[0].pulse < 80 ||
-					patient.measures[0].oxygensat > 1.7 ||
-					patient.measures[0].oxygensat < 0.7
+					patient.measures[0].pulse > pulse.warning.maxLevel ||
+					patient.measures[0].pulse < pulse.warning.minLevel ||
+					patient.measures[0].oxygensat > oxygensat.warning.maxLevel ||
+					patient.measures[0].oxygensat < oxygensat.warning.minLevel
 				) {
 					followWarning.push(patient);
 				} else {
@@ -71,11 +75,13 @@ const Follow = ({ patient: { patients }, fetchPatients }) => {
 
 Follow.propTypes = {
 	patients      : PropTypes.array.isRequired,
+	preferences   : PropTypes.object.isRequired,
 	fetchPatients : PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	patient : state.patient
+	patient     : state.patient,
+	preferences : state.auth.user.preferences
 });
 
 export default connect(mapStateToProps, { fetchPatients })(Follow);
