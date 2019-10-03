@@ -45,6 +45,7 @@ export const register = ({
 	lastname,
 	institution,
 	jobtitle,
+	preferences,
 	email,
 	password
 }) => async (dispatch) => {
@@ -59,6 +60,7 @@ export const register = ({
 		lastname,
 		institution,
 		jobtitle,
+		preferences,
 		email,
 		password
 	});

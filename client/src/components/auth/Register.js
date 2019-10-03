@@ -11,6 +11,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 		lastname    : '',
 		institution : '',
 		jobtitle    : '',
+		pdmax       : '',
+		pwmax       : '',
+		pwmin       : '',
+		pdmin       : '',
+		odmax       : '',
+		owmax       : '',
+		owmin       : '',
+		odmin       : '',
 		email       : '',
 		password    : '',
 		password2   : ''
@@ -21,6 +29,14 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 		lastname,
 		institution,
 		jobtitle,
+		pdmax,
+		pwmax,
+		pwmin,
+		pdmin,
+		odmax,
+		owmax,
+		owmin,
+		odmin,
 		email,
 		password,
 		password2
@@ -34,11 +50,23 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 		if (password !== password2) {
 			setAlert('Passwords do not match', 'danger', 3000);
 		} else {
+			const preferences = {
+				pulse     : {
+					danger  : { minLevel: pdmin, maxLevel: pdmax },
+					warning : { minLevel: pwmin, maxLevel: pwmax }
+				},
+				oxygensat : {
+					danger  : { minLevel: odmin, maxLevel: odmax },
+					warning : { minLevel: owmin, maxLevel: owmax }
+				}
+			};
+
 			register({
 				firstname,
 				lastname,
 				institution,
 				jobtitle,
+				preferences,
 				email,
 				password
 			});
@@ -145,6 +173,114 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 							id='exPass2'
 							name='password2'
 							value={password2}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+				</div>
+
+				<hr />
+				<h3>Preferences Setup</h3>
+
+				<h5>Pulse</h5>
+				<div className='row'>
+					<div className='three columns'>
+						<label htmlFor='pdmin'>Pulse Danger Min</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 60.7'
+							id='pdmin'
+							name='pdmin'
+							value={pdmin}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='pwmin'>Pulse Warning Min</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 80.3'
+							id='pwmin'
+							name='pwmin'
+							value={pwmin}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='pwmax'>Pulse Warning Max</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 167.02'
+							id='pwmax'
+							name='pwmax'
+							value={pwmax}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='pdmax'>Pulse Danger Max</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 180.21'
+							id='pdmax'
+							name='pdmax'
+							value={pdmax}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+				</div>
+
+				<br />
+				<h5>Oxygen Saturation</h5>
+				<div className='row'>
+					<div className='three columns'>
+						<label htmlFor='odmin'>O2 Saturation Danger Min</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 0.47'
+							id='odmin'
+							name='odmin'
+							value={odmin}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='owmin'>O2 Saturation Warning Min</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 0.63'
+							id='owmin'
+							name='owmin'
+							value={owmin}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='owmax'>O2 Saturation Warning Max</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 1.72'
+							id='owmax'
+							name='owmax'
+							value={owmax}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='odmax'>O2 Saturation Danger Max</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 2.121'
+							id='odmax'
+							name='odmax'
+							value={odmax}
 							onChange={(e) => onChange(e)}
 						/>
 					</div>

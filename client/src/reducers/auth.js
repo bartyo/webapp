@@ -1,8 +1,8 @@
 import {
 	REGISTER_SUCCESS,
-	UPDATE_SUCCESS,
 	REGISTER_FAIL,
 	USER_LOADED,
+	UPDATE_SUCCESS,
 	AUTH_ERROR,
 	LOGIN_SUCCESS,
 	LOGIN_FAIL,
@@ -22,6 +22,7 @@ export default function(state = initialState, action) {
 
 	switch (type) {
 		case USER_LOADED:
+		case UPDATE_SUCCESS:
 			return {
 				...state,
 				isAuthenticated : true,
@@ -29,7 +30,6 @@ export default function(state = initialState, action) {
 				user            : payload
 			};
 		case REGISTER_SUCCESS:
-		case UPDATE_SUCCESS:
 		case LOGIN_SUCCESS:
 			localStorage.setItem('token', payload.token);
 			return {

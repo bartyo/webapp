@@ -10,6 +10,14 @@ const EditUser = ({ user, updateUser, history }) => {
 		lastname    : '',
 		institution : '',
 		jobtitle    : '',
+		pdmax       : '',
+		pwmax       : '',
+		pwmin       : '',
+		pdmin       : '',
+		odmax       : '',
+		owmax       : '',
+		owmin       : '',
+		odmin       : '',
 		email       : '',
 		password    : ''
 	});
@@ -21,6 +29,30 @@ const EditUser = ({ user, updateUser, history }) => {
 				lastname    : !user.lastname ? '' : user.lastname,
 				institution : !user.institution ? '' : user.institution,
 				jobtitle    : !user.jobtitle ? '' : user.jobtitle,
+				pwmax       : !user.preferences
+					? ''
+					: user.preferences.pulse.warning.maxLevel,
+				pdmax       : !user.preferences
+					? ''
+					: user.preferences.pulse.danger.maxLevel,
+				pwmin       : !user.preferences
+					? ''
+					: user.preferences.pulse.warning.minLevel,
+				pdmin       : !user.preferences
+					? ''
+					: user.preferences.pulse.danger.minLevel,
+				odmax       : !user.preferences
+					? ''
+					: user.preferences.oxygensat.danger.maxLevel,
+				owmax       : !user.preferences
+					? ''
+					: user.preferences.oxygensat.warning.maxLevel,
+				owmin       : !user.preferences
+					? ''
+					: user.preferences.oxygensat.warning.minLevel,
+				odmin       : !user.preferences
+					? ''
+					: user.preferences.oxygensat.danger.minLevel,
 				email       : !user.email ? '' : user.email
 			});
 		},
@@ -32,6 +64,14 @@ const EditUser = ({ user, updateUser, history }) => {
 		lastname,
 		institution,
 		jobtitle,
+		pdmax,
+		pwmax,
+		pwmin,
+		pdmin,
+		odmax,
+		owmax,
+		owmin,
+		odmin,
 		email,
 		password
 	} = formData;
@@ -42,7 +82,28 @@ const EditUser = ({ user, updateUser, history }) => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 
-		updateUser(formData, history);
+		const preferences = {
+			pulse     : {
+				danger  : { minLevel: pdmin, maxLevel: pdmax },
+				warning : { minLevel: pwmin, maxLevel: pwmax }
+			},
+			oxygensat : {
+				danger  : { minLevel: odmin, maxLevel: odmax },
+				warning : { minLevel: owmin, maxLevel: owmax }
+			}
+		};
+
+		const updatedUser = {
+			firstname,
+			lastname,
+			institution,
+			jobtitle,
+			preferences,
+			email,
+			password
+		};
+
+		updateUser(updatedUser, history);
 	};
 
 	//TODO: Add validation on the client side 'required'
@@ -104,6 +165,114 @@ const EditUser = ({ user, updateUser, history }) => {
 							id='exJobTitle'
 							name='jobtitle'
 							value={jobtitle}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+				</div>
+
+				<hr />
+				<h3>Preferences Setup</h3>
+
+				<h5>Pulse</h5>
+				<div className='row'>
+					<div className='three columns'>
+						<label htmlFor='pdmin'>Pulse Danger Min</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 60.7'
+							id='pdmin'
+							name='pdmin'
+							value={pdmin}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='pwmin'>Pulse Warning Min</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 80.3'
+							id='pwmin'
+							name='pwmin'
+							value={pwmin}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='pwmax'>Pulse Warning Max</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 167.02'
+							id='pwmax'
+							name='pwmax'
+							value={pwmax}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='pdmax'>Pulse Danger Max</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 180.21'
+							id='pdmax'
+							name='pdmax'
+							value={pdmax}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+				</div>
+
+				<br />
+				<h5>Oxygen Saturation</h5>
+				<div className='row'>
+					<div className='three columns'>
+						<label htmlFor='odmin'>O2 Saturation Danger Min</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 0.47'
+							id='odmin'
+							name='odmin'
+							value={odmin}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='owmin'>O2 Saturation Warning Min</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 0.63'
+							id='owmin'
+							name='owmin'
+							value={owmin}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='owmax'>O2 Saturation Warning Max</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 1.72'
+							id='owmax'
+							name='owmax'
+							value={owmax}
+							onChange={(e) => onChange(e)}
+						/>
+					</div>
+					<div className='three columns'>
+						<label htmlFor='odmax'>O2 Saturation Danger Max</label>
+						<input
+							className='u-full-width'
+							type='text'
+							placeholder='Ex 2.121'
+							id='odmax'
+							name='odmax'
+							value={odmax}
 							onChange={(e) => onChange(e)}
 						/>
 					</div>

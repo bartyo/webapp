@@ -1013,6 +1013,9 @@ form {
 .alert-danger {
 	background: var(--danger-color);
 }
+.alert-warning {
+	background: var(--warning-color);
+}
 .alert-success {
 	background: var(--success-color);
 }
@@ -1156,6 +1159,15 @@ there.
 .value-description {
 	opacity: .8;
 	font-weight: 300;
+}
+
+/* Colors
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.danger {
+	color: var(--danger-color);
+}
+.warning {
+	color: var(--warning-color);
 }
 
 /* Help

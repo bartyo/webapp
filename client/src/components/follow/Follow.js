@@ -2,9 +2,13 @@ import React, { Fragment, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchPatients } from '../../actions/patient';
-import Moment from 'react-moment';
+import FollowRow from './FollowRow';
 
-const Follow = ({ patient: { patients }, fetchPatients }) => {
+const Follow = ({
+	patient       : { patients },
+	preferences   : { pulse, oxygensat },
+	fetchPatients
+}) => {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			fetchPatients();
@@ -12,22 +16,35 @@ const Follow = ({ patient: { patients }, fetchPatients }) => {
 		return () => clearInterval(interval);
 	});
 
-	const follow = patients.map((patient) => (
-		<tr key={patient._id}>
-			<td>{patient.patient.status}</td>
-			<td>{patient.patient.firstname}</td>
-			<td>{patient.patient.lastname}</td>
-			<td>{patient.measures.length === 0 ? '-' : patient.measures[0].pulse}</td>
-			<td>
-				{patient.measures.length === 0 ? '-' : patient.measures[0].oxygensat}
-			</td>
-			<td>
-				<Moment interval={5000} fromNow ago>
-					{patient.patient.admission}
-				</Moment>
-			</td>
-		</tr>
-	));
+	let followDanger = [];
+	let followWarning = [];
+	let followNormal = [];
+
+	if (patients.length !== 0) {
+		patients.forEach((patient) => {
+			if (patient.measures.length !== 0) {
+				if (
+					patient.measures[0].pulse > pulse.danger.maxLevel ||
+					patient.measures[0].pulse < pulse.danger.minLevel ||
+					patient.measures[0].oxygensat > oxygensat.danger.maxLevel ||
+					patient.measures[0].oxygensat < oxygensat.danger.minLevel
+				) {
+					followDanger.push(patient);
+				} else if (
+					patient.measures[0].pulse > pulse.warning.maxLevel ||
+					patient.measures[0].pulse < pulse.warning.minLevel ||
+					patient.measures[0].oxygensat > oxygensat.warning.maxLevel ||
+					patient.measures[0].oxygensat < oxygensat.warning.minLevel
+				) {
+					followWarning.push(patient);
+				} else {
+					followNormal.push(patient);
+				}
+			} else {
+				followNormal.push(patient);
+			}
+		});
+	}
 
 	return (
 		<Fragment>
@@ -45,7 +62,11 @@ const Follow = ({ patient: { patients }, fetchPatients }) => {
 							<th>Since</th>
 						</tr>
 					</thead>
-					<tbody>{patients === [] ? 'AddPatient' : follow}</tbody>
+					<tbody>
+						<FollowRow patients={followDanger} type={'danger'} />
+						<FollowRow patients={followWarning} type={'warning'} />
+						<FollowRow patients={followNormal} />
+					</tbody>
 				</table>
 			)}
 		</Fragment>
@@ -54,11 +75,13 @@ const Follow = ({ patient: { patients }, fetchPatients }) => {
 
 Follow.propTypes = {
 	patients      : PropTypes.array.isRequired,
+	preferences   : PropTypes.object.isRequired,
 	fetchPatients : PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	patient : state.patient
+	patient     : state.patient,
+	preferences : state.auth.user.preferences
 });
 
 export default connect(mapStateToProps, { fetchPatients })(Follow);

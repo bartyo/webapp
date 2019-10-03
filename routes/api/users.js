@@ -33,7 +33,8 @@ router.post(
 			institution,
 			jobtitle,
 			email,
-			password
+			password,
+			preferences
 		} = req.body;
 
 		try {
@@ -52,7 +53,8 @@ router.post(
 				institution,
 				jobtitle,
 				email,
-				password
+				password,
+				preferences
 			});
 
 			// Encrypt password
@@ -108,19 +110,10 @@ router.put(
 			lastname,
 			institution,
 			jobtitle,
+			preferences,
 			email,
 			password
 		} = req.body;
-
-		// Start creation of new user
-		const update = {
-			firstname,
-			lastname,
-			institution,
-			jobtitle,
-			email,
-			password
-		};
 
 		try {
 			// Validate User and Permission
@@ -138,9 +131,14 @@ router.put(
 					.json({ errors: [ { msg: 'Invalid credentials' } ] });
 			}
 
-			// Encrypt password
-			const salt = await bcrypt.genSalt(10);
-			update.password = await bcrypt.hash(password, salt);
+			// Start creation of new user
+			const update = {
+				firstname,
+				lastname,
+				institution,
+				jobtitle,
+				preferences
+			};
 
 			// Save user to DB
 			let user = await User.findOneAndUpdate({ email }, update, { new: true });
@@ -151,7 +149,7 @@ router.put(
 				{ expiresIn: '365 days' },
 				(err, token) => {
 					if (err) throw err;
-					res.json({ token });
+					res.json({ user });
 				}
 			);
 		} catch (err) {
