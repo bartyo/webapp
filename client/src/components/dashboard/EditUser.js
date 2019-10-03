@@ -103,8 +103,6 @@ const EditUser = ({ user, updateUser, history }) => {
 			password
 		};
 
-		console.log('EditUser:', updatedUser);
-
 		updateUser(updatedUser, history);
 	};
 

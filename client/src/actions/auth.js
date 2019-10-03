@@ -104,8 +104,6 @@ export const updateUser = (formData, history) => async (dispatch) => {
 			payload : res.data
 		});
 
-		console.log('server:', res.data);
-
 		dispatch(loadUser(true));
 
 		history.push('/dashboard');
