@@ -1013,6 +1013,9 @@ form {
 .alert-danger {
 	background: var(--danger-color);
 }
+.alert-warning {
+	background: var(--warning-color);
+}
 .alert-success {
 	background: var(--success-color);
 }
@@ -1161,10 +1164,10 @@ there.
 /* Colors
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .danger {
-	color: var(--danger-color)
+	color: var(--danger-color);
 }
 .warning {
-	color: var(--warning-color)
+	color: var(--warning-color);
 }
 
 /* Help
