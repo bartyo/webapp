@@ -45,6 +45,7 @@ export const register = ({
 	lastname,
 	institution,
 	jobtitle,
+	preferences,
 	email,
 	password
 }) => async (dispatch) => {
@@ -59,6 +60,7 @@ export const register = ({
 		lastname,
 		institution,
 		jobtitle,
+		preferences,
 		email,
 		password
 	});
@@ -101,6 +103,8 @@ export const updateUser = (formData, history) => async (dispatch) => {
 			type    : UPDATE_SUCCESS,
 			payload : res.data
 		});
+
+		console.log('server:', res.data);
 
 		dispatch(loadUser(true));
 

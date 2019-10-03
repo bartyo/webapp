@@ -32,6 +32,28 @@ const userSchema = new Schema({
 		type    : Date,
 		default : Date.now
 	},
+	preferences : {
+		pulse     : {
+			danger  : {
+				minLevel : { type: Number, required: true, default: 60 },
+				maxLevel : { type: Number, required: true, default: 180 }
+			},
+			warning : {
+				minLevel : { type: Number, required: true, default: 80 },
+				maxLevel : { type: Number, required: true, default: 160 }
+			}
+		},
+		oxygensat : {
+			danger  : {
+				minLevel : { type: Number, required: true, default: 0.5 },
+				maxLevel : { type: Number, required: true, default: 2 }
+			},
+			warning : {
+				minLevel : { type: Number, required: true, default: 0.7 },
+				maxLevel : { type: Number, required: true, default: 1.7 }
+			}
+		}
+	},
 	devices     : [
 		{
 			patient  : {

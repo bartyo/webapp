@@ -1158,6 +1158,15 @@ there.
 	font-weight: 300;
 }
 
+/* Colors
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.danger {
+	color: var(--danger-color)
+}
+.warning {
+	color: var(--warning-color)
+}
+
 /* Help
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .get-help {
