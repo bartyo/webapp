@@ -1,11 +1,14 @@
 import {
 	ADMIT_PATIENT,
 	FOLLOW_PATIENTS,
-	RESET_PATIENTS
+	SET_PATIENT,
+	RESET_PATIENTS,
+	DISCHARGE_PATIENT
 } from '../actions/types';
 
 const initialState = {
-	patients : []
+	patients : [],
+	patient  : {}
 };
 
 export default function(state = initialState, action) {
@@ -22,14 +25,22 @@ export default function(state = initialState, action) {
 				...state,
 				patients : payload
 			};
+		case SET_PATIENT:
+			return {
+				...state,
+				patient : payload
+			};
 		case RESET_PATIENTS:
 			return {
 				...state,
 				patients : []
 			};
-		// DISCHARGE_PATIENT has _id in payload
-		// case DISCHARGE_PATIENT:
-		// 	return state.filter((patient) => patient._id !== payload);
+		case DISCHARGE_PATIENT:
+			return {
+				...state,
+				patients : payload,
+				patient  : {}
+			};
 
 		default:
 			return state;

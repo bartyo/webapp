@@ -1022,7 +1022,6 @@ form {
 .alert-white {
 	background: #fff;
 	color: #333;
-	border: #ccc solid 1px;
 }
 
 /* Navbar
@@ -1170,6 +1169,11 @@ there.
 	color: var(--warning-color);
 }
 
+/* Cursor
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.pointer {
+	cursor: pointer;
+}
 /* Help
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 .get-help {

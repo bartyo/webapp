@@ -11,6 +11,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const ADMIT_PATIENT = 'ADMIT_PATIENT';
 export const FOLLOW_PATIENTS = 'FOLLOW_PATIENTS';
+export const SET_PATIENT = 'SET_PATIENT';
 export const DISCHARGE_PATIENT = 'DISCHARGE_PATIENT';
 export const RESET_PATIENTS = 'RESET_PATIENTS';
 export const DELETE_USER = 'DELETE_USER';

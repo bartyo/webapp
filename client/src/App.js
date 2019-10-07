@@ -8,6 +8,8 @@ import Dashboard from './components/dashboard/Dashboard';
 import EditUser from './components/dashboard/EditUser';
 import Follow from './components/follow/Follow';
 import AddPatient from './components/follow/AddPatient';
+import EditPatient from './components/follow/EditPatient';
+import Patient from './components/follow/Patient';
 import PrivateRoute from './components/routing/PrivateRoute';
 import Alert from './components/layout/Alert';
 import setAuthToken from './utils/setAuthToken';
@@ -41,6 +43,12 @@ const App = () => {
 							<PrivateRoute exact path='/edit-user' component={EditUser} />
 							<PrivateRoute exact path='/add-patient' component={AddPatient} />
 							<PrivateRoute exact path='/follow' component={Follow} />
+							<PrivateRoute path={`/patient/:patientId`} component={Patient} />
+							<PrivateRoute
+								exact
+								path='/edit-patient/:patientId'
+								component={EditPatient}
+							/>
 						</Switch>
 					</section>
 				</Fragment>
