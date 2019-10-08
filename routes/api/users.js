@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../../middleware/auth');
 const bcrypt = require('bcryptjs');
 const keys = require('../../config/keys');
 const jwt = require('jsonwebtoken');
@@ -13,11 +14,12 @@ const User = require('../../models/User');
 router.post(
 	'/',
 	[
-		check('firstname', 'Name is required')
-			.not()
-			.isEmpty(),
+		check('firstname', 'Name is required').not().isEmpty(),
+		check('lastname', 'Surname is required').not().isEmpty(),
+		check('institution', 'Institution is required').not().isEmpty(),
+		check('jobtitle', 'Job title is required').not().isEmpty(),
 		check('email', 'Please include valid e-mail').isEmail(),
-		check('password', 'Password: 5 or charcters').isLength({ min: 5 })
+		check('password', 'Password: 5+ charcters').isLength({ min: 5 })
 	],
 	async (req, res) => {
 		//return res.send( req.headers );
@@ -32,7 +34,8 @@ router.post(
 			institution,
 			jobtitle,
 			email,
-			password
+			password,
+			preferences
 		} = req.body;
 
 		try {
@@ -41,7 +44,7 @@ router.post(
 			if (user) {
 				return res
 					.status(400)
-					.json({ errors: [{ msg: 'User already exists' }] });
+					.json({ errors: [ { msg: 'User already exists' } ] });
 			}
 
 			// Start creation of new user
@@ -51,7 +54,8 @@ router.post(
 				institution,
 				jobtitle,
 				email,
-				password
+				password,
+				preferences
 			});
 
 			// Encrypt password
@@ -80,5 +84,96 @@ router.post(
 		}
 	}
 );
+
+// @route 	PUT api/users
+// @desc		Update user
+// @access	Private
+
+router.put(
+	'/',
+	auth,
+	[
+		check('firstname', 'Name is required').not().isEmpty(),
+		check('lastname', 'Surname is required').not().isEmpty(),
+		check('institution', 'Institution is required').not().isEmpty(),
+		check('jobtitle', 'Job title is required').not().isEmpty(),
+		check('email', 'Please include valid e-mail').isEmail(),
+		check('password', 'Password Required').isLength({ min: 5 })
+	],
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+		// Extract data sent through body of request
+		const {
+			firstname,
+			lastname,
+			institution,
+			jobtitle,
+			preferences,
+			email,
+			password
+		} = req.body;
+
+		try {
+			// Validate User and Permission
+			// Check if email exists
+			let validate = await User.findOne({ email });
+			let pwdMatch = null;
+
+			if (validate) {
+				pwdMatch = await bcrypt.compare(password, validate.password);
+			}
+
+			if (!validate || !pwdMatch) {
+				return res
+					.status(400)
+					.json({ errors: [ { msg: 'Invalid credentials' } ] });
+			}
+
+			// Start creation of new user
+			const update = {
+				firstname,
+				lastname,
+				institution,
+				jobtitle,
+				preferences
+			};
+
+			// Save user to DB
+			let user = await User.findOneAndUpdate({ email }, update, { new: true });
+
+			jwt.sign(
+				{ user: { id: user.id } },
+				keys.jwtSecret,
+				{ expiresIn: '365 days' },
+				(err, token) => {
+					if (err) throw err;
+					res.json({ user });
+				}
+			);
+		} catch (err) {
+			console.error(err.message);
+			res.status(500).send('Server error');
+		}
+	}
+);
+
+// @route 	DELETE api/users
+// @desc		Delete user
+// @access	Private
+
+router.delete('/', auth, async (req, res) => {
+	try {
+		// Find and remove
+		await User.findByIdAndRemove(req.user.id);
+
+		return res.status(200).json({ msg: 'User Removed' });
+	} catch (err) {
+		console.error(err.message);
+		return res.status(500).send('Server error');
+	}
+});
 
 module.exports = router;
